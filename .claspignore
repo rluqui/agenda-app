@@ -1,0 +1,11 @@
+**/**
+!appsscript.json
+!**/*.gs
+!**/*.js
+!**/*.ts
+
+# No subir backups
+backups/**
+
+# Por si reaparece accidentalmente
+NUL
