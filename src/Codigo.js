@@ -1647,4 +1647,4 @@ function reorderInspeccionesFast_(CHUNK){
   if (color) tmp.setTabColor(color);
   styleHeader_(tmp);
 }
-//PRUEBA DE SINCRONIZACION
+//PRUEBA DE SINCRONIZACION va de vuelta
