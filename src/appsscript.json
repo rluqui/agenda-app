@@ -1,7 +1,6 @@
 {
-  "timeZone": "America/Argentina/Buenos_Aires",
-  "dependencies": {
-  },
+  "timeZone": "America/Argentina/Buenos_Aires",  <-- Borra la coma y vuelve a ponerla
+  "dependencies": {},
   "exceptionLogging": "STACKDRIVER",
   "runtimeVersion": "V8"
 }
