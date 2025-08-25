@@ -1,0 +1,12 @@
+# Credenciales locales (NO subir)
+.clasprc.json
+creds.json
+
+# Copias/temporales
+backups/
+node_modules/
+
+# Archivos del SO/IDE
+.DS_Store
+Thumbs.db
+.vscode/
