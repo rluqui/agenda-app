@@ -1,0 +1,38 @@
+# Nombre del flujo de trabajo que aparecerá en la pestaña "Actions" de GitHub
+name: Deploy to Google Apps Script
+
+# Define cuándo se debe ejecutar esta acción
+on:
+  # Se ejecutará cada vez que hagas un 'push' a la rama 'main'
+  push:
+    branches:
+      - main
+
+# Define los trabajos (tareas) que se ejecutarán
+jobs:
+  deploy:
+    # Usa la última versión de Ubuntu como sistema operativo del servidor virtual
+    runs-on: ubuntu-latest
+    steps:
+      # 1. Descarga tu código del repositorio al servidor virtual
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 2. Instala Node.js, necesario para ejecutar clasp
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      # 3. Crea el archivo de credenciales a partir del Secreto de GitHub
+      # Este es el paso mágico de autenticación
+      - name: Create .clasprc.json
+        run: echo '${{ secrets.CLASPRC_JSON }}' > ~/.clasprc.json
+
+      # 4. Instala la última versión estable de clasp
+      - name: Install Clasp
+        run: npm install -g @google/clasp@latest
+
+      # 5. Sube los archivos a Google Apps Script
+      - name: Push to Apps Script
+        run: clasp push -f
