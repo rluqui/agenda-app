@@ -16,3 +16,6 @@ node_modules/
 Thumbs.db
 
 # (A propósito NO ignoramos .clasp.json)
+# Ignorar archivos de credenciales
+creds.json
+client_secret_*.json
