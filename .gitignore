@@ -2,11 +2,17 @@
 .clasprc.json
 creds.json
 
-# Copias/temporales
+# Copias / temporales
 backups/
+*.log
+
+# Dependencias (por si las hubiera)
 node_modules/
 
-# Archivos del SO/IDE
+# Archivos del editor / SO
+.vscode/
+.idea/
 .DS_Store
 Thumbs.db
-.vscode/
+
+# (A propósito NO ignoramos .clasp.json)

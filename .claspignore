@@ -1,11 +1,14 @@
+# Ignora todo por defecto
 **/**
-!appsscript.json
-!**/*.gs
-!**/*.js
-!**/*.ts
 
-# No subir backups
+# --- PERMITIR SOLO el código dentro de src/ ---
+!src/appsscript.json
+!src/**/*.gs
+!src/**/*.js
+!src/**/*.ts
+!src/**/*.html
+
+# No subir cosas locales
 backups/**
-
-# Por si reaparece accidentalmente
-NUL
+creds.json
+.clasprc.json

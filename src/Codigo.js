@@ -39,19 +39,24 @@ const HDR = {
     'ID_AUTORIDAD','ID_INSPECCION','FK_ID_ASOCIACION',
     'AUTORIDAD_NOMBRE','AUTORIDAD_MAIL','AUTORIDAD_TELEFONO'
   ],
- PERSONAS: [
-  'ID_PERSONA','NOMBRE','MAIL','TELEFONO',
-  'ROL',
-  'DIRECCION','LOCALIDAD','DEPARTAMENTO','PROVINCIA','CP','UBICACION',
-  'FOTO', // NUEVO
 
-  // NUEVOS CAMPOS PARA SELECCIÓN JERÁRQUICA
-  'CUENCA_SELECCIONADA',
-  'ASOCIACION_SELECCIONADA',
-  'INSPECCION_SELECCIONADA',
-  'CAUCE_SELECCIONADO'
-],
-
+PERSONAS: {
+            ID_PERSONA: "ID_PERSONA",
+            NOMBRE: "NOMBRE",
+            ROL: "ROL",
+            VC_ORGANISMO: "VC_ORGANISMO",
+            TELEFONO: "TELEFONO",
+            MAIL: "MAIL",
+            DIRECCION: "DIRECCION",
+            // --- INICIO DE CAMBIOS ---
+            // Columnas estandarizadas para las selecciones jerárquicas.
+            // Reemplazan a las columnas _SELECCIONADA.
+            ID_ROL: "ID_ROL",
+            ID_ASOCIACION: "ID_ASOCIACION",
+            ID_INSPECCION: "ID_INSPECCION",
+            ID_CAUCE: "ID_CAUCE"
+            // --- FIN DE CAMBIOS ---
+        },
   INSPECCION_AUT: [
     'ID_INSPECCION_AUT','ID_INSPECCION','FK_ID_ASOCIACION','ID_PERSONA',
     'ROL','PRINCIPAL','VIG_DESDE','VIG_HASTA'
