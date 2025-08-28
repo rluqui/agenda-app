@@ -1,6 +1,5 @@
 name: Deploy to Google Apps Script
 
-# Añade estos permisos para que la acción pueda obtener un token de GitHub
 permissions:
   contents: read
   id-token: write
@@ -17,13 +16,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # 1. El nuevo paso de autenticación SIN LLAVES
       - name: Authenticate to Google Cloud
         id: auth
         uses: google-github-actions/auth@v2
         with:
           workload_identity_provider: 'projects/290718974725/locations/global/workloadIdentityPools/github-pool/providers/github-provider'
           service_account: 'github-actions-deployer@clasp-469712.iam.gserviceaccount.com'
+          # --- AÑADE LA SIGUIENTE LÍNEA ---
+          create_credentials_file: true
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -32,7 +32,11 @@ jobs:
 
       - name: Install Clasp
         run: npm install -g @google/clasp@latest
+      
+      # --- AÑADE ESTE NUEVO PASO DE LOGIN ---
+      # Usa el archivo de credenciales temporal creado en el paso de autenticación
+      - name: Login to Clasp
+        run: clasp login --creds ${{ steps.auth.outputs.credentials_file_path }}
 
-      # 2. Ya no se necesita 'clasp login'
       - name: Push to Apps Script
         run: clasp push -f
