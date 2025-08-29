@@ -1,4 +1,4 @@
-name: Deploy to Google Apps Script
+name: Deploy Apps Script using OIDC
 
 on:
   push:
@@ -10,30 +10,24 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      id-token: write
-      contents: read
+      contents: 'read'
+      id-token: 'write'
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Authenticate to Google Cloud
+      - name: Authenticate with Google Cloud
         uses: google-github-actions/auth@v2
         with:
-          # Sustituí los valores entre comillas con los tuyos reales si es necesario
-          workload_identity_provider: 'projects/290718974725/locations/global/workloadIdentityPools/github-pool/providers/github'
-          service_account: 'github-actions-deployer@agenda-app-469712.iam.gserviceaccount.com'
+          workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.SERVICE_ACCOUNT_EMAIL }}
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
 
-      - name: Install specific version of Clasp
-        run: npm install -g @google/clasp@2.4.1
-
-      - name: Create dummy .clasprc.json
-        run: echo '{}' > ~/.clasprc.json
-
-      - name: Push to Google Apps Script
-        run: clasp push -f
+      - name: Deploy Apps Script
+        run: |
+          npm install -g @google/clasp
+          clasp login --no-localhost
+          clasp push
