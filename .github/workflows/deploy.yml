@@ -1,9 +1,5 @@
 name: Deploy to Google Apps Script
 
-permissions:
-  contents: read
-  id-token: write
-
 on:
   push:
     branches:
@@ -12,30 +8,27 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Authenticate to Google Cloud
-        id: auth
         uses: google-github-actions/auth@v2
         with:
-          workload_identity_provider: 'projects/290718974725/locations/global/workloadIdentityPools/github-pool/providers/github-provider'
-          service_account: 'github-actions-deployer@clasp-469712.iam.gserviceaccount.com'
+          workload_identity_provider: 'projects/290718974725/locations/global/workloadIdentityPools/github-pool/providers/github'
+          service_account: 'github-actions-deployer@agenda-app-469712.iam.gserviceaccount.com'
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18
 
-      - name: Install a Stable Version of Clasp
+      - name: Install specific version of Clasp
         run: npm install -g @google/clasp@2.4.1
-      
-      # --- PASO CLAVE AÑADIDO ---
-      # Crea un archivo .clasprc.json falso y vacío para evitar el error ENOENT.
-      # Clasp usará la autenticación del entorno (del paso 'Authenticate') en lugar de este archivo.
-      - name: Create Dummy .clasprc.json
+
+      - name: Create dummy .clasprc.json
         run: echo '{}' > ~/.clasprc.json
 
-      - name: Push to Apps Script
+      - name: Push to Google Apps Script
         run: clasp push -f
