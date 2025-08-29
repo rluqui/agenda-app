@@ -22,7 +22,6 @@ jobs:
         with:
           workload_identity_provider: 'projects/290718974725/locations/global/workloadIdentityPools/github-pool/providers/github-provider'
           service_account: 'github-actions-deployer@clasp-469712.iam.gserviceaccount.com'
-          create_credentials_file: true
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -32,11 +31,11 @@ jobs:
       - name: Install a Stable Version of Clasp
         run: npm install -g @google/clasp@2.4.1
       
-      # --- HEMOS ELIMINADO EL PASO 'Login to Clasp' ---
+      # --- PASO CLAVE AÑADIDO ---
+      # Crea un archivo .clasprc.json falso y vacío para evitar el error ENOENT.
+      # Clasp usará la autenticación del entorno (del paso 'Authenticate') en lugar de este archivo.
+      - name: Create Dummy .clasprc.json
+        run: echo '{}' > ~/.clasprc.json
 
       - name: Push to Apps Script
         run: clasp push -f
-        # --- AÑADIMOS ESTA SECCIÓN 'env' ---
-        # Le pasamos las credenciales directamente al comando push
-        env:
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ steps.auth.outputs.credentials_file_path }}
