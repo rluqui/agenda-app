@@ -9,6 +9,10 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    permissions:
+      id-token: write
+      contents: read
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -16,6 +20,7 @@ jobs:
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
         with:
+          # Sustituí los valores entre comillas con los tuyos reales si es necesario
           workload_identity_provider: 'projects/290718974725/locations/global/workloadIdentityPools/github-pool/providers/github'
           service_account: 'github-actions-deployer@agenda-app-469712.iam.gserviceaccount.com'
 
