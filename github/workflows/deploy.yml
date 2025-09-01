@@ -22,13 +22,11 @@ jobs:
         with:
           workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
           service_account: ${{ secrets.SERVICE_ACCOUNT_EMAIL }}
-          token_format: 'access_token'
 
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
 
       - name: Deploy Apps Script
         run: |
-          echo "${{ secrets.CLASPRC_JSON }}" > ~/.clasprc.json
           npm install -g @google/clasp
           clasp push
